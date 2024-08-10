@@ -1,0 +1,169 @@
+#HANGMAN GAME
+import random
+stages = ['''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''',  '''
+  +---+
+  |   |
+  0   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+word_list = ["aardvark", "baboon", "camel", "chocolate", "happy"]
+
+chosen_word = random.choice(word_list)
+print(chosen_word)
+
+placeholder = ""
+word_length = len(chosen_word)
+for position in range(word_length):
+    placeholder += "_"
+print(placeholder)
+lives = 6
+game_over = False
+correct_letters = []
+
+while not game_over and lives >= 0:
+    guess = input("Guess a letter: ").lower()
+
+    display = ""
+
+    for letter in chosen_word:
+        if letter == guess:
+            display += letter
+            correct_letters.append(guess)
+        elif letter in correct_letters:
+            display += letter
+        else:
+            display += "_"
+
+    print(display)
+    if lives >= 0 and guess not in chosen_word:
+        lives -= 1
+    elif guess in chosen_word:
+        lives +=0
+    elif lives == 0 and guess not in chosen_word:
+        print("You lose")
+    #print(f"Your remaining lives is {lives} ")
+
+    if lives == 6:
+        print( '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''')
+    elif lives ==5:
+        print(  '''
+  +---+
+  |   |
+  0   |
+      |
+      |
+      |
+=========
+''')
+    elif lives == 4:
+        print(  '''
+  +---+
+  |   |
+  0   |
+  |   |
+      |
+      |
+=========
+''')
+    elif lives == 3:
+        print( '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''')
+    elif lives == 2:
+        print( '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''')
+    elif lives == 1:
+        print( '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''')
+    elif lives == 0:
+        print('''
+ +---+
+ |   |
+ O   |
+/|\  |
+/ \  |
+     |
+=========
+YOU LOST !!
+''')
+
+    if "_" not in display:
+        game_over = True
+        print("You win.")
